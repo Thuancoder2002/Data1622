@@ -1,0 +1,260 @@
+CREATE TABLE Students_Account(
+ID_Sv CHAR(9) NOT NULL PRIMARY KEY,
+Name_Sv VARCHAR(25) NOT NULL,
+Mail_Sv VARCHAR(50),
+Passwords nVARCHAR(50),
+Sex  CHAR CHECK (Sex IN ('M', 'F', 'm', 'f')),
+Class VARCHAR(25),
+Age INT,
+Address VARCHAR(50)
+);
+
+
+CREATE TABLE Sing_up(
+ID_Book INT NOT NULL PRIMARY KEY,
+Borrowed_date DATE,
+Pay_date DATE,
+Borrowing_term INT,
+ID_Sv CHAR(9) NOT NULL,
+FOREIGN KEY (ID_Sv) REFERENCES Students_Account(ID_Sv),
+);
+
+CREATE TABLE Rating(
+ID_Rating INT NOT NULL PRIMARY KEY,
+ID_Sv CHAR(9) NOT NULL,
+Name_Sv VARCHAR(25) NOT NULL
+FOREIGN KEY(ID_Sv)REFERENCES Students_Account(ID_Sv)
+);
+
+
+CREATE TABLE Library(
+ID_Library INT NOT NULL PRIMARY KEY,
+Name_Library VARCHAR(25),
+ID_Sv CHAR(9) NOT NULL,
+ID_Rating INT NOT NULL,
+FOREIGN KEY (ID_Sv) REFERENCES Students_Account(ID_Sv),
+FOREIGN KEY (ID_Rating) REFERENCES Rating(ID_Rating)
+);
+
+
+CREATE TABLE Author(
+ID_Author INT NOT NULL PRIMARY KEY,
+Name_Author VARCHAR(25) NOT NULL,
+Address VARCHAR(25) NOT NULL,
+Sex CHAR CHECK (Sex IN ('M', 'F', 'm', 'f')),
+Age INT
+);
+
+CREATE TABLE Type(
+ID_Type INT NOT NULL PRIMARY KEY,
+Name_Book VARCHAR(25),
+ID_Library INT
+FOREIGN KEY (ID_Library) REFERENCES Library(ID_Library)
+);
+
+CREATE TABLE Book(
+ID INT NOT NULL PRIMARY KEY,
+ID_Book INT NOT NULL,
+Name_Book VARCHAR(25) NOT NULL,
+Publication_date DATE,
+ID_Author INT NOT NULL,
+FOREIGN KEY (ID_Book) REFERENCES Sing_Up(ID_Book),
+FOREIGN KEY(ID_Author) REFERENCES Author(ID_Author)
+
+);
+
+CREATE TABLE Type_Book(
+ID_Type INT NOT NULL,
+ID_Book INT NOT NULL,
+PRIMARY KEY (ID_Type,ID_Book),
+FOREIGN KEY (ID_Type) REFERENCES Type(ID_Type),
+FOREIGN KEY (ID_Book) REFERENCES Book(ID_Book)
+
+);
+
+
+
+
+
+
+INSERT INTO Students_Account
+VALUES  ('GCH200123','THANH','Thanhgch123@greenwich.com','Thanh123','M','GCH1004','20','HANOI'), 
+        ('GCH200234','NU','Nugch234@greenwich.com','Nu246','F','GCH1004','21','HUNGYEN'),    
+        ('GCH200345','TRUNG','Trunggch354@greenwich.com','Trung99','M','GCH1001','21','HANOI'),     
+        ('GCH200567','DAT','Datgch567@greenwich.com','Dat154','F','GCH1002','22','BACNINH'),     
+        ('GCH200789','KIEN','Kiengch789@greenwich.com','Kien687','M','GCH1004','21','THAINGUYEN'),   
+        ('GCH200896','LAM','Lamgch896@greenwich.com','Lam224','F','GCH1001','23','BACNINH'),     
+        ('GCH200586','ANH','Anhgch586@greenwich.com','Anh245','F','GCH1004','25','BACGIANG'),
+        ('GCH200909','NGAN','Ngangch909@greenwich.com','Ngan654','F','GCH1002','23','NGHEAN'),
+('GCH200888','VIETANH','Vietanhgch888@greenwich.com','vietanhh123','F','GCH1001','23','LANGSON'),     
+        ('GCH200555','TAI','Taich555@greenwich.com','tai245','M','GCH1004','25','DIENBIEN'),
+        ('GCH200987','HA','Hagch987@greenwich.com','ha654','M','GCH1002','23','HAGIANG')
+
+
+
+INSERT INTO Sing_up
+VALUES
+       (1,'2019-5-19','2019-6-19',30,'GCH200123'),
+       (2,'2022-01-19','2022-3-19',60,'GCH200234'),
+       (3,'2022-2-19','2022-3-19',30,'GCH200345'),
+       (4,'2022-06-12','2022-07-12',30,'GCH200567'),
+       (5,'2022-02-05','2022-2-20',15,'GCH200123'),
+       (6,'2022-08-18','2022-10-18',60,'GCH200234'),
+       (7,'2022-5-19','2022-6-19',30,'GCH200789'),
+       (8,'2021-8-18','2021-9-8',20,'GCH200896'),
+       (9,'2021-9-19','2021-11-20',60,'GCH200909'),
+       (10,'2021-10-22','2021-11-22',30,'GCH200888'),
+       (11,'2021-12-22','2022-1-22',31,'GCH200909'),
+       (12,'2021-11-22','2021-12-22',30,'GCH200567'),
+	(13,'2022-1-19','2022-3-19',30,'GCH200555'),
+       (14,'2021-2-18','2021-3-8',20,'GCH200896'),
+       (15,'2021-3-19','2021-5-20',60,'GCH200888'),
+       (16,'2021-4-22','2021-5-22',30,'GCH200555'),
+       (17,'2021-5-22','2022-6-22',31,'GCH200987'),
+       (18,'2021-6-22','2021-7-22',30,'GCH200909'),
+	 (19,'2021-06-18','2021-07-18',30,'GCH200987')
+
+
+
+INSERT INTO  Book
+VALUES (101,'Content Marketing','05-APR-20',180),
+       (102,'Digital MarKeting','25-OCT-17',181),
+	   (103,'Graphic Design','03-MAY-18',182),
+	   (104,'Confident web design','29-FEB-12',182),
+	   (105,'Database','01-JAN-18',189),
+	   (106,'IC3Sapark','31-DEC-18',189),
+	   (107,'Business Law','05-MAY-17',180),
+	   (108,'Sales Manegament','29-FEB-20',181),
+	   (109,'Web Design','01-JAN-15',185),
+	   (110,'Networking','03-MAY-16',185)
+
+
+INSERT INTO Rating
+    VALUES      (1,'GCH200123','THANH'),
+	            (2,'GCH200234','NU'),
+		        (3,'GCH200123','THANH'),
+		        (4,'GCH200567','DAT'),
+		        (5,'GCH200789','KIEN'),
+		        (6,'GCH200896','LAM'),
+		        (7,'GCH200345','TRUNG'),
+		        (8,'GCH200789','KIEN'),
+		        (9,'GCH200896','LAM'),
+		        (10,'GCH200345','TRUNG'),
+		        (11,'GCH200567','DAT'),
+		        (12,'GCH200567','DAT'),
+		        (13,'GCH200123','THANH'),
+				(14,'GCH200555','TAI'),
+				(15,'GCH200888','VIETANH'),
+				(16,'GCH200909','NGAN'),
+				(17,'GCH200888','VIETANH'),
+				(18,'GCH200909','NGAN')
+
+
+
+
+
+
+
+
+INSERT INTO Author
+VALUES (1,'FGW','HANOI','F',30),
+       (2,'Join','NEWYORK','M',66),
+	   (3,'JAMES','USA','F',88),
+	   (4,'CADIZ','ENG','M',50),
+	   (5,'ALEX','HONGKOG','M',50),
+	   (6,'Vina','JAPAN','F',61),
+	   (7,'Cathwell','VIETNAM','M',60),
+	   (8,'FGW','HANOI','F',50),
+          (9,'Tony','NEWYORK','M',66),
+	   (10,'Koss','USA','F',88),
+	   (11,'Babe','ENG','M',30),
+	   (12,'Tonis','HONGKOG','M',51),
+	   (13,'Ozakiwi','JAPAN','F',61),
+	   (14,'Thanh','VIETNAM','M',60),
+	   (15,'Trump','USA','F',88),
+	   (16,'Joson','ENG','M',30),
+	   (17,'ALEX','HONGKOG','M',51),
+	   (18,'Videz','JAPAN','F',61),
+	   (19,'Cathali','VIETNAM','M',60)
+
+
+
+
+
+Insert into Book
+VALUES   (1,'1','IC3 SPARK','2017-05-18',1),
+         (2,'1','Sales Maagement','2019-02-19',2),
+		 (3,'3','Business Law','2019-02-4',3),
+		 (4,'2','Web Design','2015-05-4',1),
+		 (5,'15','Database','2016-02-05',15),
+		 (6,'16','Marketting','2015-01-09',15),
+		 (7,'18','Graphic Design','2014-08-9',5),
+		 (8,'9','Typography','2015-09-12',19),
+		 (9,'6','Networking','2015-12-8',19),
+		 (10,'5','Programning','2016-5-2',8),
+		 (11,'3','Security','2015-8-6',5),
+		 (12,'15','HTML-CSS','2016-8-9',8),
+		 (13,'16','Java','2017-9-9',14),
+		 (14,'9','Database','2016-02-05',18),
+		 (15,'2','Marketting','2015-01-09',18)
+
+
+
+
+
+
+
+
+
+insert into Library
+VALUES (100,'FGW','GCH200123',3),
+       (101,'FGW','GCH200234',5),
+	   (102,'FGW','GCH200345',7),
+	   (103,'FGW','GCH200567',11),
+	   (104,'FGW','GCH200789',8),
+	   (105,'FGW','GCH200567',12),
+	   (106,'FGW','GCH200896',9),
+	   (107,'FGW','GCH200234',2),
+	   (108,'FGW','GCH200555',9),
+	   (109,'FGW','GCH200586',10),
+       (110,'FGW','GCH200888',15),
+	   (111,'FGW','GCH200896',18),
+	   (112,'FGW','GCH200909',16),
+	   (113,'FGW','GCH200789',15),
+	   (114,'FGW','GCH200888',5),
+	   (115,'FGW','GCH200909',16),
+	   (116,'FGW','GCH200586',4),
+	   (117,'FGW','GCH200234',6)
+
+
+
+insert into Type
+VALUES(1,'Technology',101),
+      (2,'Business',105),
+	  (3,'Enghlish',106),
+	  (4,'Graphic Desgin',108),
+	  (5,'Marketting',109),
+	  (6,'Academy',107),
+	  (7,'Document',103),
+	  (8,'Business',105),
+	  (9,'Enghlish',106),
+	  (10,'Graphic Desgin',108),
+	  (11,'Marketting',109)
+
+INSERT INTO Type_Book
+VALUES (1,2),
+       (1,5),
+	   (3,9),
+	   (5,8),
+	   (8,10),
+	   (9,13),
+	   (2,2),
+	   (8,9),
+	   (11,6),
+	   (10,13),
+	   (9,15),
+	   (6,10),
+	   (2,15),
+	   (2,1),
+	   (3,12)
+
