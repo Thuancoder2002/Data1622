@@ -1,0 +1,82 @@
+CREATE TABLE Students_Account(
+ID_Sv INT NOT NULL PRIMARY KEY,
+Mail_Sv VARCHAR(50),
+Name_Sv VARCHAR(25) NOT NULL,
+Sex  CHAR CHECK (Sex IN ('M', 'F', 'm', 'f')),
+Class VARCHAR(25),
+Age INT,
+Address VARCHAR(50)
+);
+CREATE TABLE Teacher_Account(
+ID_Tch INT NOT NULL PRIMARY KEY,
+Mail_Tch VARCHAR(50) NOT NULL,
+Name_Tch VARCHAR(25),
+Sex  CHAR CHECK (Sex IN ('M', 'F', 'm', 'f')),
+Address VARCHAR(50),
+Age INT
+);
+
+CREATE TABLE Sing_up(
+ID_Book INT NOT NULL PRIMARY KEY,
+Borrowed_date DATE,
+Pay_date DATE,
+Borrowing_term INT,
+ID_Sv INT NOT NULL,
+ID_Tch INT NOT NULL,
+FOREIGN KEY (ID_Sv) REFERENCES Students_Account(ID_Sv),
+FOREIGN KEY (ID_Tch) REFERENCES Teacher_Account(ID_Tch)
+);
+
+CREATE TABLE Library(
+ID_Library INT NOT NULL PRIMARY KEY,
+Name_Library VARCHAR(25),
+ID_Sv INT NOT NULL,
+ID_Rating INT NOT NULL,
+ID_Tch INT NOT NULL,
+FOREIGN KEY (ID_Tch) REFERENCES Teacher_Account(ID_Tch),
+FOREIGN KEY (ID_Sv) REFERENCES Students_Account(ID_Sv),
+FOREIGN KEY (ID_Rating) REFERENCES Rating(ID_Rating)
+
+
+);
+
+CREATE TABLE Author(
+ID_Author INT NOT NULL PRIMARY KEY,
+Name_Author VARCHAR(25) NOT NULL,
+Address VARCHAR(25) NOT NULL,
+Sex CHAR CHECK (Sex IN ('M', 'F', 'm', 'f')),
+Age INT
+);
+
+
+
+CREATE TABLE Type(
+ID_Type INT NOT NULL PRIMARY KEY,
+Name_Book VARCHAR(25)
+
+);
+
+CREATE TABLE Rating(
+ID_Rating INT NOT NULL PRIMARY KEY,
+ID_Tch INT NOT NULL,
+ID_Sv INT NOT NULL,
+Name_Sv VARCHAR(25) NOT NULL,
+Name_Tch VARCHAR(25) NOT NULL
+FOREIGN KEY(ID_Tch)REFERENCES Teacher_Account(ID_Tch),
+FOREIGN KEY(ID_Sv)REFERENCES Students_Account(ID_Sv)
+);
+
+CREATE TABLE Book(
+ID_Book INT NOT NULL PRIMARY KEY,
+Name_Book VARCHAR(25) NOT NULL,
+Publication_date DATE,
+ID_Author INT NOT NULL,
+ID_Type INT NOT NULL ,
+ID_Library INT NOT NULL,
+FOREIGN KEY (ID_Book) REFERENCES Sing_Up(ID_Book),
+FOREIGN KEY(ID_Author) REFERENCES Author(ID_Author),
+FOREIGN KEY(ID_Library) REFERENCES Library(ID_Library),
+FOREIGN KEY(ID_Type) REFERENCES Type(ID_Type)
+);
+
+
